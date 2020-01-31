@@ -1,0 +1,23 @@
+#.INIT_START
+#PUSH SystemSingle 1
+#PUSH SystemSingle 5
+#CONSTRUCT UnityEngineVector2 2
+#SETHEAP "test"
+#PUSH SystemString "This should work"
+#SETHEAP "str"
+#.INIT_END
+.data_start
+	test: %UnityEngineVector2, null
+	str: %SystemString, null
+.data_end
+
+.code_start
+    .export _start
+    
+    _start:
+        PUSH, test
+        EXTERN, "UnityEngineDebug.__Log__SystemObject__SystemVoid"
+	PUSH, str
+        EXTERN, "UnityEngineDebug.__Log__SystemObject__SystemVoid"
+        JUMP, 0xFFFFFF
+.code_end

@@ -1,0 +1,28 @@
+#.INIT_START
+#PUSHENUM UnityEngineFFTWindow Rectangular
+#SETHEAP "test"
+#PUSH SystemInt32 256
+#CONSTRUCT SystemSingleArray 1
+#SETHEAP "samples"
+#.INIT_END
+.data_start
+    test: %UnityEngineFFTWindow, null
+    samples: %SystemSingleArray, null
+    audio: %UnityEngineAudioSource, null
+    channel: %SystemInt32, 0
+    .export audio
+.data_end
+
+.code_start
+    .export _start
+    
+    _start:
+        PUSH, audio
+        PUSH, samples
+        PUSH, channel
+        PUSH, test
+        EXTERN, "UnityEngineAudioSource.__GetSpectrumData__SystemSingleArray_SystemInt32_UnityEngineFFTWindow__SystemVoid"
+        PUSH, test
+        EXTERN, "UnityEngineDebug.__Log__SystemObject__SystemVoid"
+        JUMP, 0xFFFFFF
+.code_end

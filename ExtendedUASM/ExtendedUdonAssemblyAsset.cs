@@ -5,6 +5,7 @@ using VRC.Udon.EditorBindings;
 using VRC.Udon.UAssembly.Assembler;
 using VRC.Udon.UAssembly.Interfaces;
 
+[assembly: UdonProgramSourceNewMenu(typeof(ExtendedUdonAssemblyAsset), "Extended Udon Assembly Program Asset")]
 [CreateAssetMenu(fileName = "ExtendedUdonAssemblyAsset", menuName = "VRChat/Udon/Extended Udon Assembly Program Asset")]
 public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
 {
@@ -47,6 +48,9 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
                     case "PUSH":
                         HandlePushInstruction(rawLine, instructionArgs, stack, typeResolver);
                         break;
+                    case "PUSHENUM":
+                        HandlePushEnumInstruction(rawLine, instructionArgs, stack, typeResolver);
+                        break;
                     case "CONSTRUCT":
                         HandleConstructInstruction(rawLine, instructionArgs, stack, typeResolver);
                         break;
@@ -69,7 +73,10 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
         var variableName = instructionArgs[1].Replace("\"", "");
         var addr = program.SymbolTable.GetAddressFromSymbol(variableName);
         var data = stack.Pop();
-        program.Heap.SetHeapVariable(addr, data, data.GetType());
+        if (data is Type)
+            program.Heap.SetHeapVariable(addr, data, typeof(Type)); //Prevents .GetType from getting RuntimeType
+        else
+            program.Heap.SetHeapVariable(addr, data, data.GetType());
     }
 
     private void HandleConstructInstruction(string rawLine, string[] instructionArgs, Stack<object> stack,
@@ -81,13 +88,13 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
         var typeName = instructionArgs[1];
         var constructorArgumentcount = int.Parse(instructionArgs[2]);
 
-        object[] args = new object[constructorArgumentcount];
+        Stack<object> flipped = new Stack<object>();
         for (int i = 0; i < constructorArgumentcount; i++)
         {
-            args[i] = stack.Pop();
+            flipped.Push(stack.Pop());
         }
 
-        object obj = Activator.CreateInstance(typeResolver.GetTypeFromTypeString(typeName), args);
+        object obj = Activator.CreateInstance(typeResolver.GetTypeFromTypeString(typeName), flipped.ToArray());
         stack.Push(obj);
     }
 
@@ -109,11 +116,23 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
             case "SystemDouble":
                 output = Double.Parse(literal);
                 break;
+            case "SystemInt64":
+                output = Int64.Parse(literal);
+                break;
             case "SystemInt32":
                 output = Int32.Parse(literal);
                 break;
+            case "SystemInt16":
+                output = Int16.Parse(literal);
+                break;
+            case "SystemUInt64":
+                output = UInt64.Parse(literal);
+                break;
             case "SystemUInt32":
                 output = UInt32.Parse(literal);
+                break;
+            case "SystemUInt16":
+                output = UInt16.Parse(literal);
                 break;
             case "SystemString":
                 output = literal.Trim('"');
@@ -121,10 +140,43 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
             case "SystemBoolean":
                 output = Boolean.Parse(literal);
                 break;
+            case "SystemChar":
+                output = char.Parse(literal);
+                break;
+            case "SystemByte":
+                output = byte.Parse(literal);
+                break;
+            case "SystemSByte":
+                output = sbyte.Parse(literal);
+                break;
+            case "SystemType":
+                output = typeResolver.GetTypeFromTypeString(literal);
+                if (output == null)
+                    throw new InvalidOperationException(
+                        $"Unable to find type '{literal}'.");
+                break;
             default:
                 throw new InvalidOperationException($"PUSH literal unsupported for type {typeName}");
         }
 
+        stack.Push(output);
+    }
+
+    private void HandlePushEnumInstruction(string rawLine, string[] instructionArgs, Stack<object> stack,
+        TypeResolverGroup typeResolver)
+    {
+        if (instructionArgs.Length != 3)
+            throw new InvalidOperationException(
+                $"PUSHENUM requires 2 arguments(EnumType, EnumValueName). EX: 'PUSHENUM UnityEngineFFTWindow Rectangular'");
+        var enumName = instructionArgs[1];
+        var enumValueName = instructionArgs[2];
+
+        var enumType = typeResolver.GetTypeFromTypeString(enumName);
+        if (enumType == null)
+            throw new InvalidOperationException(
+                $"Unable to find type '{enumName}'.");
+        object output = Enum.Parse(enumType, enumValueName);
+        
         stack.Push(output);
     }
 }

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(ExtendedUdonAssemblyAsset))]
-public class ExtendedUdonAssemblyEditor : UdonProgramAssetEditor
+public class ExtendedUdonAssemblyEditor : UdonAssemblyProgramAssetEditor
 {
     
 }

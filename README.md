@@ -43,13 +43,18 @@ Example:
 .code_end
 ```
 
-Above you can see comments which look very similar to udon assembly, Don't worry there's only 3 instructions.
+Above you can see comments which look very similar to udon assembly. Don't worry there's only 4 instructions.
 
 **PUSH**
 
 - Usage: `#PUSH TypeName LiteralValue`. Example: `#PUSH SystemString "This is a string"` `#PUSH SystemSingle 123.456`
-- Supported literals that can be pushed include SystemSingle, SystemDouble, SystemInt32, SystemUInt32, SystemString, SystemBoolean.
+- Supported literals that can be pushed include SystemSingle, SystemDouble, SystemInt64, SystemInt32, SystemInt16, SystemUInt64, SystemUInt32, SystemUInt16, SystemString, SystemBoolean, SystemChar, SystemByte, SystemSByte, and SystemType
 - Strings should look like 'PUSH SystemString "This is a string"'
+
+**PUSHENUM**
+
+- Usage: `#PUSHENUM TypeName EnumValueName`. Example: `#PUSHENUM UnityEngineFFTWindow Hamming`
+- Attempts to find the enum value `EnumValueName` in the type `TypeName`
 
 **CONSTRUCT**
 - Usage: `#CONSTRUCT TypeName ArgCount`. Example: `#CONSTRUCT UnityEngineVector2 2`
@@ -58,3 +63,7 @@ Above you can see comments which look very similar to udon assembly, Don't worry
 **SETHEAP**
 - Usage: `#SETHEAP "variableName"`. Example: `#SETHEAP "test"`
 - Finds the variable named `variableName` in the assmebly and sets the value of that variable on the heap to the first object on the stack which is popped off.
+
+
+
+Place any of these instructions in between `#.INIT_START` and `#.INIT_END` at the top of the file.
