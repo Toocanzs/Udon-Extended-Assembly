@@ -41,12 +41,12 @@ Above you can see comments which look very similar to udon assembly, Don't worry
 
 **PUSH**
 
-- Usage: '#PUSH TypeName LiteralValue'. Example: `#PUSH SystemString "This is a string"` `#PUSH SystemSingle 123.456`
+- Usage: `#PUSH TypeName LiteralValue`. Example: `#PUSH SystemString "This is a string"` `#PUSH SystemSingle 123.456`
 - Supported literals that can be pushed include SystemSingle, SystemDouble, SystemInt32, SystemUInt32, SystemString, SystemBoolean.
 - Strings should look like 'PUSH SystemString "This is a string"'
 
 CONSTRUCT
-- Usage: '#CONSTRUCT TypeName ArgCount'. Example: `#CONSTRUCT UnityEngineVector2 2`
+- Usage: `#CONSTRUCT TypeName ArgCount`. Example: `#CONSTRUCT UnityEngineVector2 2`
 - Pops `ArgCount` arguments off the stack and attempts to construct the type `TypeName` with those arguments. It will attempt to call the constructor that the arguments fit into. The result is automatically pushed back onto the stack.
 
 SETHEAP
