@@ -9,21 +9,23 @@ using VRC.Udon.UAssembly.Interfaces;
 [CreateAssetMenu(fileName = "ExtendedUdonAssemblyAsset", menuName = "VRChat/Udon/Extended Udon Assembly Program Asset")]
 public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
 {
+    TypeResolverGroup typeResolver = new TypeResolverGroup(new List<IUAssemblyTypeResolver>()
+    {
+        new SystemTypeResolver(),
+        new UnityEngineTypeResolver(),
+        new VRCSDK2TypeResolver(),
+        new UdonTypeResolver(),
+        new ExceptionTypeResolver(),
+        new UdonBehaviourTypeResolver(),
+    });
+    
     protected override void DoRefreshProgramActions()
     {
         base.DoRefreshProgramActions();
 
         if (program != null)
         {
-            var typeResolver = new TypeResolverGroup(new List<IUAssemblyTypeResolver>()
-            {
-                new SystemTypeResolver(),
-                new UnityEngineTypeResolver(),
-                new VRCSDK2TypeResolver(),
-                new UdonTypeResolver(),
-                new ExceptionTypeResolver(),
-                new UdonBehaviourTypeResolver(),
-            });
+            
 
             var lines = udonAssembly.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
             bool started = false;

@@ -4,7 +4,7 @@ This project adds the ability to construct and fill the heap from UASM alone thr
 
 **How to use:**
 
-Drop the folder `ExtendedUASM` into `D:\Unity\2017\Projects\Udon\Assets\Udon\Editor`
+Drop the folder `ExtendedUASM` into `\Assets\Udon\Editor`
 
 Then right click, Create->VRChat->Udon->Extended Udon Assembly Program Asset
 
