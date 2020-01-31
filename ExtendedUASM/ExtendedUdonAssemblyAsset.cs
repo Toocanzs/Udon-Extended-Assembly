@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VRC.Udon.EditorBindings;
 using VRC.Udon.UAssembly.Assembler;
 using VRC.Udon.UAssembly.Interfaces;
-using Object = UnityEngine.Object;
 
 [CreateAssetMenu(fileName = "ExtendedUdonAssemblyAsset", menuName = "VRChat/Udon/Extended Udon Assembly Program Asset")]
 public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
