@@ -1,0 +1,23 @@
+#.INIT_START
+#PUSHLABEL "testing"
+#SETHEAP "test"
+#PUSH SystemString "This is a test"
+#SETHEAP "str"
+#.INIT_END
+.data_start
+	test: %SystemUInt32, null
+	str: %SystemString, null
+.data_end
+
+.code_start
+    .export _start
+    
+    _start:
+        JUMP_INDIRECT, test
+        JUMP, 0xFFFFFF
+		
+	testing:
+		PUSH, str
+		EXTERN, "UnityEngineDebug.__Log__SystemObject__SystemVoid"
+		JUMP, 0xFFFFFF
+.code_end
