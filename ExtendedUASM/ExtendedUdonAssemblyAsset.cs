@@ -25,8 +25,6 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
 
         if (program != null)
         {
-            
-
             var lines = udonAssembly.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
             bool started = false;
             var stack = new Stack<object>();
@@ -43,6 +41,8 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
 
                 var rawLine = line.TrimStart('#');
                 var instructionArgs = rawLine.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                if (instructionArgs.Length < 1)
+                    continue;
                 var instruction = instructionArgs[0];
 
                 switch (instruction)

@@ -12,6 +12,8 @@ Add that new file to the "Program Source" slot on a UdonBehaviour
 
 Paste your UASM code in the Assembly Code box.
 
+Alternativly you can create a `.euasm` file and it will be automatically turned into an EUASM asset. This allows you to edit the source code inside any editor you want.
+
 **What does Udon Extended Assembly add?**
 
 By adding comments to the top of the uasm source code, you can construct types at compile time.
