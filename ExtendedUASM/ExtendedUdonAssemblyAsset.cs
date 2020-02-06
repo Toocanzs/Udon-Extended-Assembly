@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VRC.Udon.EditorBindings;
 using VRC.Udon.UAssembly.Assembler;
@@ -22,9 +23,10 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
     protected override void DoRefreshProgramActions()
     {
         base.DoRefreshProgramActions();
-
         if (program != null)
         {
+            var symbolNameToAddress = program.EntryPoints.GetSymbols().ToDictionary(x => x, x => program.EntryPoints.GetAddressFromSymbol(x));
+
             var lines = udonAssembly.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
             bool started = false;
             var stack = new Stack<object>();
@@ -53,6 +55,9 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
                     case "PUSHENUM":
                         HandlePushEnumInstruction(rawLine, instructionArgs, stack, typeResolver);
                         break;
+                    case "PUSHLABEL":
+                        HandlePushLabel(rawLine, instructionArgs, stack, typeResolver, symbolNameToAddress);
+                        break;
                     case "CONSTRUCT":
                         HandleConstructInstruction(rawLine, instructionArgs, stack, typeResolver);
                         break;
@@ -63,6 +68,24 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
                         throw new InvalidOperationException($"Unknown instruction '{instruction}'");
                 }
             }
+        }
+    }
+    
+    private void HandlePushLabel(string rawLine, string[] instructionArgs, Stack<object> stack,
+        TypeResolverGroup typeResolver, Dictionary<string, uint> symbolNameToAddress)
+    {
+        if (instructionArgs.Length != 2)
+            throw new InvalidOperationException(
+                $"PUSHLABEL instruction requires 1 arguments(AssemblyVariableName). EX: 'PUSHLABEL \"_update\"'");
+        var labelName = instructionArgs[1].Replace("\"", "");
+        if (symbolNameToAddress.TryGetValue(labelName, out uint address))
+        {
+            stack.Push(address);
+        }
+        else
+        {
+            throw new InvalidOperationException(
+                $"Unable to find label '{labelName}'");
         }
     }
 

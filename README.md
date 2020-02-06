@@ -45,7 +45,7 @@ Example:
 .code_end
 ```
 
-Above you can see comments which look very similar to udon assembly. Don't worry there's only 4 instructions.
+Above you can see comments which look very similar to udon assembly. Don't worry there's only 5 instructions.
 
 **PUSH**
 
@@ -57,6 +57,11 @@ Above you can see comments which look very similar to udon assembly. Don't worry
 
 - Usage: `#PUSHENUM TypeName EnumValueName`. Example: `#PUSHENUM UnityEngineFFTWindow Hamming`
 - Attempts to find the enum value `EnumValueName` in the type `TypeName`
+
+**PUSHLABEL**
+
+- Usage: `#PUSHLABEL "LabelName"`. Example: `#PUSHENUM "testing"`
+- Finds the label `LabelName` and pushes the address of that label onto the stack as a SystemUInt32
 
 **CONSTRUCT**
 - Usage: `#CONSTRUCT TypeName ArgCount`. Example: `#CONSTRUCT UnityEngineVector2 2`
