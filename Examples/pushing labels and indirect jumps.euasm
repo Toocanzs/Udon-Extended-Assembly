@@ -1,7 +1,11 @@
 #.INIT_START
+#//Push the address of the label testing
 #PUSHLABEL "testing"
+#//Set variable test to the uint address of the label testing
 #SETHEAP "test"
+#//Push a string
 #PUSH SystemString "This is a test"
+#//Set variable str to the string
 #SETHEAP "str"
 #.INIT_END
 .data_start

@@ -1,8 +1,13 @@
 #.INIT_START
+#//Gets the enum UnityEngine.FFTWindow.Rectangular
 #PUSHENUM UnityEngineFFTWindow Rectangular
+#//Set variable test to that enum value
 #SETHEAP "test"
+#//Push array size of 256
 #PUSH SystemInt32 256
+#//Pop 1 argument(array size) off the stack and constructs a float[]
 #CONSTRUCT SystemSingleArray 1
+#//Set variable samples to the float array
 #SETHEAP "samples"
 #.INIT_END
 .data_start

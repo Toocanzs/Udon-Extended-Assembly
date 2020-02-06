@@ -40,6 +40,8 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
                     continue;
                 if (line == "#.INIT_END")
                     break;
+                if (line.StartsWith("#//"))
+                    continue;//Comments
 
                 var rawLine = line.TrimStart('#');
                 var instructionArgs = rawLine.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);

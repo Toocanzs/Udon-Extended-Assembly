@@ -71,6 +71,7 @@ Above you can see comments which look very similar to udon assembly. Don't worry
 - Usage: `#SETHEAP "variableName"`. Example: `#SETHEAP "test"`
 - Finds the variable named `variableName` in the assmebly and sets the value of that variable on the heap to the first object on the stack which is popped off.
 
+Comments start with `#//`
 
 
 Place any of these instructions in between `#.INIT_START` and `#.INIT_END` at the top of the file.

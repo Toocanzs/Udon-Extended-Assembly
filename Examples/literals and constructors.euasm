@@ -1,8 +1,11 @@
 #.INIT_START
 #PUSH SystemSingle 1
 #PUSH SystemSingle 5
+#//Push 1,5. Then pop 1,5 and construct new Vector2(1,5)
 #CONSTRUCT UnityEngineVector2 2
+#//Set test to that new vector2
 #SETHEAP "test"
+#//Set str to the following string
 #PUSH SystemString "This should work"
 #SETHEAP "str"
 #.INIT_END
