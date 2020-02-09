@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEngine;
 using VRC.Udon.EditorBindings;
@@ -113,7 +114,7 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
             throw new InvalidOperationException(
                 $"CONSTRUCT instruction requires 2 arguments(TypeName, ArgumentCount). EX: 'CONSTRUCT UnityEngineVector2 2'");
         var typeName = instructionArgs[1];
-        var constructorArgumentcount = int.Parse(instructionArgs[2]);
+        var constructorArgumentcount = int.Parse(instructionArgs[2], CultureInfo.InvariantCulture);
 
         Stack<object> flipped = new Stack<object>();
         for (int i = 0; i < constructorArgumentcount; i++)
@@ -138,28 +139,28 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
         switch (typeName)
         {
             case "SystemSingle":
-                output = Single.Parse(literal);
+                output = Single.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemDouble":
-                output = Double.Parse(literal);
+                output = Double.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemInt64":
-                output = Int64.Parse(literal);
+                output = Int64.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemInt32":
-                output = Int32.Parse(literal);
+                output = Int32.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemInt16":
-                output = Int16.Parse(literal);
+                output = Int16.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemUInt64":
-                output = UInt64.Parse(literal);
+                output = UInt64.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemUInt32":
-                output = UInt32.Parse(literal);
+                output = UInt32.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemUInt16":
-                output = UInt16.Parse(literal);
+                output = UInt16.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemString":
                 output = literal.Trim('"');
@@ -171,10 +172,10 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
                 output = char.Parse(literal);
                 break;
             case "SystemByte":
-                output = byte.Parse(literal);
+                output = byte.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemSByte":
-                output = sbyte.Parse(literal);
+                output = sbyte.Parse(literal, CultureInfo.InvariantCulture);
                 break;
             case "SystemType":
                 output = typeResolver.GetTypeFromTypeString(literal);
