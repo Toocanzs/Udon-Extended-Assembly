@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using VRC.Udon.Editor.ProgramSources;
+using VRC.Udon.Editor.ProgramSources.Attributes;
 using VRC.Udon.EditorBindings;
 using VRC.Udon.UAssembly.Assembler;
 using VRC.Udon.UAssembly.Interfaces;
@@ -21,9 +23,9 @@ public class ExtendedUdonAssemblyAsset : UdonAssemblyProgramAsset
         new UdonBehaviourTypeResolver(),
     });
     
-    protected override void DoRefreshProgramActions()
+    protected override void RefreshProgramImpl()
     {
-        base.DoRefreshProgramActions();
+        base.RefreshProgramImpl();
         if (program != null)
         {
             var symbolNameToAddress = program.EntryPoints.GetSymbols().ToDictionary(x => x, x => program.EntryPoints.GetAddressFromSymbol(x));
