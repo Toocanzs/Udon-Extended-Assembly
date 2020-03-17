@@ -197,7 +197,7 @@ public class ExceptionTypeResolver : BaseTypeResolver
         {"VRCSDKBaseVRC_PortalMarkerVRChatWorld", typeof(VRC.SDKBase.VRC_PortalMarker.VRChatWorld)},
         {"VRCSDKBaseVRC_PortalMarkerSortHeading", typeof(VRC.SDKBase.VRC_PortalMarker.SortHeading)},
         {"VRCSDKBaseVRC_PortalMarkerSortOrder", typeof(VRC.SDKBase.VRC_PortalMarker.SortOrder)},
-        {"VRCSDKBaseVRC_StationMobility", typeof(VRC.SDKBase.VRC_Station.Mobility)},
+        {"VRCSDKBaseVRC_StationMobility", typeof(VRC.SDKBase.VRCStation.Mobility)},
         {"VRCSDKBaseVRC_ObjectApi", typeof(VRC.SDKBase.VRC_ObjectApi)},
         {
             "SystemCollectionsGenericListVRCSDKBaseVRC_StationInputInputPairing",
